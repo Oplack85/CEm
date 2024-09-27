@@ -1,6 +1,2 @@
-pyTelegramBotAPI 
-requests
-bs4
-gunicorn
-flask
-flask_restful
+python-telegram-bot
+telethon
