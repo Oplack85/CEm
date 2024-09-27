@@ -15,7 +15,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-
+    
     if query.data == 'clone_email':
         await query.edit_message_text(text='✎┊‌ يرجى إدخال البريد الإلكتروني الذي تريد استنساخه:')
         return EMAIL
@@ -31,10 +31,11 @@ async def receive_number(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         num_copies = int(update.message.text)
         if 1 <= num_copies <= 1000:
             original_email = context.user_data['original_email']
-            copies = [f"{original_email.split('@')[0]}_copy{i}@{original_email.split('@')[1]}" for i in range(1, num_copies + 1)]
-
-            # تقسيم النسخ إلى مجموعات وإرسال كل مجموعة في رسالة منفصلة
-            chunk_size = 100  # عدد النسخ في كل رسالة
+            email_name = original_email.split('@')[0]
+            email_domain = original_email.split('@')[1]
+            copies = [f"{email_name}{i}@{email_domain}" for i in range(1, num_copies + 1)]
+            
+            chunk_size = 100
             for i in range(0, len(copies), chunk_size):
                 copies_text = "\n".join(copies[i:i + chunk_size])
                 await update.message.reply_text(f'✎┊‌ تم إنشاء النسخ التالية:\n\n{copies_text}')
@@ -55,7 +56,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 def main():
     # الحصول على توكن البوت من المتغير البيئي
     token = os.getenv("TELEGRAM_BOT_TOKEN")
-
+    
     application = ApplicationBuilder().token(token).build()
 
     # إعداد ConversationHandler
@@ -77,3 +78,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    
