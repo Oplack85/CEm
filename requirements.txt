@@ -1,2 +1,5 @@
 python-telegram-bot
 telethon
+gunicorn
+flask
+flask_restful
