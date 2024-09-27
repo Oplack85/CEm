@@ -17,7 +17,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await query.answer()
     
     if query.data == 'clone_email':
-        await update.message.reply_text('✎┊‌ يرجى إدخال البريد الإلكتروني الذي تريد استنساخه:')
+        await query.edit_message_text(text='✎┊‌ يرجى إدخال البريد الإلكتروني الذي تريد استنساخه:')
         return EMAIL
 
 async def receive_email(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
