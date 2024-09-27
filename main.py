@@ -11,11 +11,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text('*[𝗖𝗽 𝗠𝗮𝗶𝗹 📬](t.me/Scorpion_scorp)\n\n✎┊‌ مرحبا بك في بوت استنساخ الايميلات 📧 \n\n✎┊‌ اضغط على الزر ادناه وٱتبع الخطوات ⬇️*', reply_markup=reply_markup, parse_mode='MarkdownV2', disable_web_page_preview=True)
-    
+
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
-    
+
     if query.data == 'clone_email':
         await query.edit_message_text(text='✎┊‌ يرجى إدخال البريد الإلكتروني الذي تريد استنساخه:')
         return EMAIL
@@ -31,8 +31,8 @@ async def receive_number(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         num_copies = int(update.message.text)
         if 1 <= num_copies <= 1000:
             original_email = context.user_data['original_email']
-            copies = [f"{i}) {original_email.split('@')[0]}{i}@{original_email.split('@')[1]}" for i in range(1, num_copies + 1)]
-            
+            copies = [f"{original_email.split('@')[0]}_copy{i}@{original_email.split('@')[1]}" for i in range(1, num_copies + 1)]
+
             # تقسيم النسخ إلى مجموعات وإرسال كل مجموعة في رسالة منفصلة
             chunk_size = 100  # عدد النسخ في كل رسالة
             for i in range(0, len(copies), chunk_size):
@@ -55,7 +55,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 def main():
     # الحصول على توكن البوت من المتغير البيئي
     token = os.getenv("TELEGRAM_BOT_TOKEN")
-    
+
     application = ApplicationBuilder().token(token).build()
 
     # إعداد ConversationHandler
