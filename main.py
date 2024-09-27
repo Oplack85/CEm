@@ -33,7 +33,7 @@ async def receive_number(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             original_email = context.user_data['original_email']
             email_name = original_email.split('@')[0]
             email_domain = original_email.split('@')[1]
-            copies = [f"{email_name}{i}@{email_domain}" for i in range(1, num_copies + 1)]
+            copies = [f"{email_name}.{i}@{email_domain}" for i in range(1, num_copies + 1)]
             
             chunk_size = 100
             for i in range(0, len(copies), chunk_size):
